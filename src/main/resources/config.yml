@@ -1,0 +1,15 @@
+# options
+whitelist: false
+
+# messages plugin #color codes not support in v. 1.0
+messages:
+  not-whitelisted: "You're not on the whitelist! \nhttps://discord.gg/c8t34KUSNZ (change this link, this is developer discord)"
+  player-added: "player added to whitelist!"
+  player-removed: "player removed from whitelist!"
+  files-updated: "configs updated!"
+  not-permission: "You don't have enough permissions!"
+  whitelist-enabled: "Whitelist has enabled"
+  whitelist-disabled: "Whitelist has disabled"
+
+players:
+  - "kelsidev"

@@ -1,0 +1,19 @@
+name: KWhitelist
+version: '${project.version}'
+main: kelsi.kwhitelist.KWhitelist
+api-version: 1.20
+authors: [ Kelsi ]
+description: whitelist plugin, developed by KelsiDev
+prefix: kWhitelist
+permissions:
+  kwl.admin:
+    description: "permission node for administarors"
+    default: op
+commands:
+  kwl:
+    aliases:
+      - wl
+      - whitelist
+      - kwhitelist
+    usage: "/kwl add <player> - add player to whitelist \n/kwl remove <player> - remove player from whitelist \n/kwl on - enable whitelist \n/kwl off - disable whitelist \n/kwl list - list players in list \n/kwl update - update whitelist files(this is not update version plugin)"
+    permission: kwl.admin
