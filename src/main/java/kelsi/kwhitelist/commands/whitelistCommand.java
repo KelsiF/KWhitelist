@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static kelsi.kwhitelist.listeners.events.list;
+import kelsi.kwhitelist.utils.whitelistUtils;
 
 public class whitelistCommand implements CommandExecutor {
 
@@ -18,14 +20,18 @@ public class whitelistCommand implements CommandExecutor {
     public whitelistCommand(JavaPlugin plugin) {this.plugin = plugin;}
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        Player player = null;
         if(sender.hasPermission("kwl.admin")) {
             if (args.length >= 1) {
+                if (sender instanceof Player) {
+                    player = (Player) sender;
+                }
                 switch (args[0]) {
                     case "help": return false;
                     case "add":
                         if (args[1] != null) {
                             list.add(args[1].toLowerCase());
-                            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("messages.player-added")));
+                            whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.player-added")));
                             plugin.getConfig().set("players", list);
                             plugin.saveConfig();
                             return true;
@@ -35,7 +41,7 @@ public class whitelistCommand implements CommandExecutor {
                     case "remove":
                         if (args[1] != null) {
                             list.remove(args[1].toLowerCase());
-                            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("messages.player-removed")));
+                            whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.player-removed")));
                             plugin.getConfig().set("players", list);
                             plugin.saveConfig();
                             return true;
@@ -43,23 +49,28 @@ public class whitelistCommand implements CommandExecutor {
                             return false;
                         }
                     case "list": sender.sendMessage(list.toString());
+                        return true;
                     case "update":
-                        sender.sendMessage(ChatColor.GREEN + Objects.requireNonNull(plugin.getConfig().getString("messages.files-updated")));
+                        whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.files-updated")));
                         list = (List<String>) plugin.getConfig().getList("players");
                         plugin.reloadConfig();
+                        return true;
                     case "on":
-                        sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-enabled")));
+                        whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-enabled")));
                         plugin.getConfig().set("whitelist", true);
+                        return true;
                     case "off":
-                        sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-disabled")));
+                        whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-disabled")));
                         plugin.getConfig().set("whitelist", false);
+                        return true;
                     default:
                         return false;
                 }
+            } else {
+                return false;
             }
-            return true;
         } else if (!sender.hasPermission("kwl.admin")) {
-            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("messages.not-permission")));
+            whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.not-permission")));
             return true;
         }
         return true;
