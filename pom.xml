@@ -6,7 +6,7 @@
 
     <groupId>kelsi</groupId>
     <artifactId>KWhitelist</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2.1</version>
     <packaging>jar</packaging>
 
     <name>KWhitelist</name>

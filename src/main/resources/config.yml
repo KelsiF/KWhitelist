@@ -10,6 +10,7 @@ messages:
   not-permission: "You don't have enough permissions!"
   whitelist-enabled: "Whitelist has enabled"
   whitelist-disabled: "Whitelist has disabled"
+  not-enough-args: "You have not written enough arguments to use this command."
 
 players:
   - "kelsidev"

@@ -20,12 +20,9 @@ public class whitelistCommand implements CommandExecutor {
     public whitelistCommand(JavaPlugin plugin) {this.plugin = plugin;}
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        Player player = null;
+        Player player = (Player) sender;
         if(sender.hasPermission("kwl.admin")) {
             if (args.length >= 1) {
-                if (sender instanceof Player) {
-                    player = (Player) sender;
-                }
                 switch (args[0]) {
                     case "help": return false;
                     case "add":
@@ -36,6 +33,7 @@ public class whitelistCommand implements CommandExecutor {
                             plugin.saveConfig();
                             return true;
                         } else {
+                            whitelistUtils.sendMessage(player, plugin.getConfig().getString("messages.not-enough-args"));
                             return false;
                         }
                     case "remove":
@@ -46,6 +44,7 @@ public class whitelistCommand implements CommandExecutor {
                             plugin.saveConfig();
                             return true;
                         } else {
+                            whitelistUtils.sendMessage(player, plugin.getConfig().getString("messages.not-enough-args"));
                             return false;
                         }
                     case "list": sender.sendMessage(list.toString());
@@ -53,15 +52,18 @@ public class whitelistCommand implements CommandExecutor {
                     case "update":
                         whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.files-updated")));
                         list = (List<String>) plugin.getConfig().getList("players");
+                        plugin.saveConfig();
                         plugin.reloadConfig();
                         return true;
                     case "on":
                         whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-enabled")));
                         plugin.getConfig().set("whitelist", true);
+                        plugin.saveConfig();
                         return true;
                     case "off":
                         whitelistUtils.sendMessage(player, Objects.requireNonNull(plugin.getConfig().getString("messages.whitelist-disabled")));
                         plugin.getConfig().set("whitelist", false);
+                        plugin.saveConfig();
                         return true;
                     default:
                         return false;

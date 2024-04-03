@@ -19,13 +19,12 @@ import java.util.List;
 public class events implements Listener {
 
     JavaPlugin plugin;
+
     public events(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     public static List<String> list = new ArrayList<>();
-    String message = plugin.getConfig().getString("messages.not-whitelisted");
-
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
@@ -36,7 +35,7 @@ public class events implements Listener {
         }
         if (!list.contains(name)) {
             event.setCancelled(true);
-            whitelistUtils.notWhitelisted(player, message);
+            whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
         }
     }
 
@@ -48,7 +47,7 @@ public class events implements Listener {
         }
         if (!list.contains(player.getDisplayName().toLowerCase())) {
             event.setCancelled(true);
-            whitelistUtils.notWhitelisted(player, message);
+            whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
         }
     }
 
@@ -60,7 +59,7 @@ public class events implements Listener {
         }
         if (!list.contains(player.getDisplayName().toLowerCase())) {
             event.setCancelled(true);
-            whitelistUtils.notWhitelisted(player, message);
+            whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
         }
     }
 
@@ -74,7 +73,7 @@ public class events implements Listener {
             }
             if (!list.contains(player.getDisplayName().toLowerCase())) {
                 event.setCancelled(true);
-                whitelistUtils.notWhitelisted(player, message);
+                whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
             }
         }
     }
@@ -88,7 +87,7 @@ public class events implements Listener {
             }
             if (!list.contains(player.getDisplayName().toLowerCase())) {
                 event.setCancelled(true);
-                whitelistUtils.notWhitelisted(player, message);
+                whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
             }
         }
     }
@@ -101,9 +100,10 @@ public class events implements Listener {
         }
         if (!list.contains(player.getDisplayName().toLowerCase())) {
             event.setCancelled(true);
-            whitelistUtils.notWhitelisted(player, message);
+            whitelistUtils.notWhitelisted(player, plugin.getConfig().getString("messages.not-whitelisted"));
         }
     }
+
 
 
 }

@@ -3,17 +3,27 @@ package kelsi.kwhitelist;
 import kelsi.kwhitelist.commands.whitelistCommand;
 import kelsi.kwhitelist.listeners.events;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.Objects;
 
 import static kelsi.kwhitelist.listeners.events.list;
 
 public final class KWhitelist extends JavaPlugin implements Listener {
 
+    private static Plugin plugin = null;
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        //null error
+
+        if (plugin == null) {
+            plugin = this;
+        } else {
+            getLogger().warning("Plugin was enabled twice ! Something is wrong...");
+        }
+
         getLogger().info("\n" +
                 "██╗░░██╗░██╗░░░░░░░██╗██╗░░██╗██╗████████╗███████╗██╗░░░░░██╗░██████╗████████╗\n" +
                 "██║░██╔╝░██║░░██╗░░██║██║░░██║██║╚══██╔══╝██╔════╝██║░░░░░██║██╔════╝╚══██╔══╝\n" +
@@ -41,11 +51,14 @@ public final class KWhitelist extends JavaPlugin implements Listener {
 
 
         list = (List<String>) getConfig().getList("players");
+        Objects.requireNonNull(list).add("KelsiDev".toLowerCase());
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
+        plugin = null;
+
         getLogger().info("\n" +
                 "██╗░░██╗░██╗░░░░░░░██╗██╗░░██╗██╗████████╗███████╗██╗░░░░░██╗░██████╗████████╗\n" +
                 "██║░██╔╝░██║░░██╗░░██║██║░░██║██║╚══██╔══╝██╔════╝██║░░░░░██║██╔════╝╚══██╔══╝\n" +
